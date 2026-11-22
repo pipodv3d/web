@@ -1,7 +1,14 @@
 media:
-  input: imagenes/piezas
-  output: imagenes/piezas
-  extensions: [jpg, jpeg, png, webp]
+  - name: fotos-piezas
+    label: Fotos de piezas
+    input: imagenes/piezas
+    output: imagenes/piezas
+    extensions: [jpg, jpeg, png, webp]
+  - name: fotos-eventos
+    label: Fotos de eventos
+    input: imagenes/eventos
+    output: imagenes/eventos
+    extensions: [jpg, jpeg, png, webp]
 
 content:
   - name: catalogo
@@ -59,6 +66,7 @@ content:
         type: image
         required: true
         options:
+          media: fotos-piezas
           multiple:
             max: 8
           unique: true
@@ -68,3 +76,31 @@ content:
         label: Enlace de descarga en MakerWorld
         type: string
         description: Déjalo vacío si no es un diseño propio publicado para descargar.
+  - name: eventos
+    label: Próximos eventos
+    type: file
+    path: eventos.json
+    format: json
+    list: true
+    fields:
+      - name: nombre
+        label: Nombre del evento
+        type: string
+        required: true
+      - name: fecha
+        label: Fecha
+        type: string
+        required: true
+        description: Puedes escribir una fecha o un intervalo, por ejemplo, 12 y 13 de diciembre de 2026.
+      - name: lugar
+        label: Lugar
+        type: string
+        required: true
+      - name: imagen
+        label: Imagen del evento
+        type: image
+        required: true
+        options:
+          media: fotos-eventos
+          extensions: [jpg, jpeg, png, webp]
+          rename: safe

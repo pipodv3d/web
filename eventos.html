@@ -39,23 +39,27 @@
   </footer>
   <script src="contacto.js"></script>
   <script>
-    // Para añadir un evento, copia el ejemplo y completa sus datos.
-    // Guarda la imagen en el proyecto (por ejemplo, en "imagenes/") y escribe aquí su ruta.
-    const eventos = [
-      // { nombre: "Mercado de artesanía", fecha: "12 de diciembre de 2026", lugar: "Plaza Mayor, Madrid", imagen: "imagenes/mercado-navidad.jpg" }
-    ];
+    // Pages CMS guarda los eventos en eventos.json y sus imágenes en imagenes/eventos/.
+    let eventos = [];
     const escapeHTML = value => String(value ?? "").replace(/[&<>"']/g, ch => ({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#39;"}[ch]));
+    const safeImage = value => { try { const url = new URL(value, location.href); return ["http:","https:"].includes(url.protocol) ? url.href : ""; } catch { return ""; } };
     function renderEvents() {
       const grid = document.getElementById("eventsGrid");
-      const confirmed = eventos.filter(event => event.nombre && event.fecha && event.lugar && event.imagen);
+      const confirmed = eventos.filter(event => event.nombre && event.fecha && event.lugar && safeImage(event.imagen));
       if (!confirmed.length) {
         grid.innerHTML = '<p class="empty">Actualmente no hay ningún evento confirmado.</p>';
         return;
       }
-      grid.innerHTML = confirmed.map(event => `<article class="event-card"><img src="${escapeHTML(event.imagen)}" alt="${escapeHTML(event.nombre)}" loading="lazy"><div class="event-info"><h2>${escapeHTML(event.nombre)}</h2><p><strong>Fecha:</strong> ${escapeHTML(event.fecha)}</p><p><strong>Lugar:</strong> ${escapeHTML(event.lugar)}</p></div></article>`).join("");
+      grid.innerHTML = confirmed.map(event => `<article class="event-card"><img src="${escapeHTML(safeImage(event.imagen))}" alt="${escapeHTML(event.nombre)}" loading="lazy"><div class="event-info"><h2>${escapeHTML(event.nombre)}</h2><p><strong>Fecha:</strong> ${escapeHTML(event.fecha)}</p><p><strong>Lugar:</strong> ${escapeHTML(event.lugar)}</p></div></article>`).join("");
     }
     document.getElementById("year").textContent = new Date().getFullYear();
-    renderEvents();
+    fetch("eventos.json").then(response => { if (!response.ok) throw new Error("No se pudieron cargar los eventos"); return response.json(); }).then(data => {
+      if (!Array.isArray(data)) throw new Error("Los eventos deben ser una lista");
+      eventos = data;
+      renderEvents();
+    }).catch(() => {
+      document.getElementById("eventsGrid").innerHTML = '<p class="empty">No se han podido cargar los eventos. Inténtalo de nuevo más tarde.</p>';
+    });
   </script>
 </body>
 </html>
