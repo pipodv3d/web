@@ -12,7 +12,7 @@ window.PIPODV3D_CONTACTO = {
   const links = [];
   const phone = String(contact.whatsapp || "").replace(/\D/g, "");
   if (/^\d{8,15}$/.test(phone)) links.push(`<a href="https://wa.me/${phone}" target="_blank" rel="noopener noreferrer">WhatsApp</a>`);
-  if (contact.email && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(contact.email)) links.push(`<a href="mailto:${contact.email}?subject=${encodeURIComponent("Consulta desde PipodV 3D")}">Correo electrónico</a>`);
+  if (contact.email && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(contact.email)) links.push(`<a href="mailto:${contact.email}?subject=${encodeURIComponent("Consulta desde PipodV 3D")}" aria-label="Enviar un correo a ${contact.email}">${contact.email}</a>`);
   for (const [label, value] of [["Instagram", contact.instagram], ["TikTok", contact.tiktok], ["MakerWorld", contact.makerworld]]) {
     try {
       const url = new URL(value);
