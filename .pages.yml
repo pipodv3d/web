@@ -1,0 +1,70 @@
+media:
+  input: imagenes/piezas
+  output: imagenes/piezas
+  extensions: [jpg, jpeg, png, webp]
+
+content:
+  - name: catalogo
+    label: Catálogo de piezas
+    type: file
+    path: catalogo.json
+    format: json
+    list: true
+    fields:
+      - name: id
+        label: Identificador interno
+        type: uuid
+        required: true
+        readonly: true
+        options:
+          editable: false
+      - name: nombre
+        label: Nombre de la pieza
+        type: string
+        required: true
+      - name: categoria
+        label: Categoría
+        type: select
+        required: true
+        options:
+          values:
+            - Anime/Cómic
+            - Videojuegos
+            - Cine/TV
+            - Láminas
+            - Llaveros
+            - Puntos de libro
+            - Decoración
+            - Navidad
+            - Halloween
+            - Otros
+            - Personalizaciones
+      - name: descripcion
+        label: Descripción
+        type: text
+        required: true
+      - name: precioOrientativo
+        label: Precio orientativo
+        type: string
+        description: Por ejemplo, Desde 8 € o A consultar.
+      - name: medidas
+        label: Medidas
+        type: string
+      - name: disponibilidad
+        label: Disponibilidad
+        type: string
+        description: Por ejemplo, Disponible, Bajo consulta o Agotado temporalmente.
+      - name: imagenes
+        label: Fotografías de la pieza
+        type: image
+        required: true
+        options:
+          multiple:
+            max: 8
+          unique: true
+          extensions: [jpg, jpeg, png, webp]
+          rename: safe
+      - name: makerworld
+        label: Enlace de descarga en MakerWorld
+        type: string
+        description: Déjalo vacío si no es un diseño propio publicado para descargar.

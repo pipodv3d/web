@@ -1,0 +1,9 @@
+Fonts bundled with PipodV 3D website
+
+Barlow Semi Condensed — Copyright 2017 The Barlow Project Authors
+SIL Open Font License 1.1. Source: https://github.com/google/fonts/tree/main/ofl/barlowsemicondensed
+License text: fonts/LICENSE-Barlow-Semi-Condensed.txt
+
+Inter — Copyright 2020 The Inter Project Authors
+SIL Open Font License 1.1. Source: https://github.com/google/fonts/tree/main/ofl/inter
+License text: fonts/LICENSE-Inter.txt
